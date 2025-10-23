@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>蘇小蒨 - 自我介紹</title>
+  <style>
+    /* 背景與全局樣式 */
+    body {
+      font-family: "Noto Sans TC", "Segoe UI", Roboto, sans-serif;
+      background: linear-gradient(135deg, #f9fafc 0%, #eef3ff 100%);
+      margin: 0;
+      padding: 40px;
+      color: #333;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      background-color: #fff;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      padding: 60px;
+      backdrop-filter: blur(10px);
+    }
+
+    /* 上方自我介紹區 */
+    .intro {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 40px;
+      margin-bottom: 60px;
+    }
+
+    .intro-text {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .intro-text h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: #1a1a1a;
+    }
+
+    .intro-text p {
+      font-size: 1.1rem;
+      line-height: 1.9;
+      margin-bottom: 10px;
+      color: #444;
+    }
+
+    .highlight {
+      font-weight: 600;
+      color: #2b4eff;
+    }
+
+    .avatar {
+      flex: 1;
+      text-align: center;
+      min-width: 260px;
+    }
+
+    .avatar img {
+      width: 100%;
+      max-width: 350px;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .avatar img:hover {
+      transform: scale(1.03);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .avatar input[type="file"] {
+      display: none;
+    }
+
+    .avatar label {
+      margin-top: 12px;
+      display: inline-block;
+      padding: 10px 20px;
+      background: linear-gradient(90deg, #2b4eff, #738cff);
+      color: white;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .avatar label:hover {
+      background: linear-gradient(90deg, #506dff, #9eaaff);
+      transform: translateY(-2px);
+    }
+
+    /* My Work 區塊 */
+    .works {
+      margin-top: 60px;
+    }
+
+    .works h2 {
+      font-size: 2rem;
+      margin-bottom: 30px;
+      color: #1a1a1a;
+      border-bottom: 2px solid #e0e0e0;
+      padding-bottom: 10px;
+    }
+
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 25px;
+    }
+
+    .work-card {
+      background-color: #fff;
+      border: 1px solid #e8e8e8;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+      transition: all 0.3s ease;
+    }
+
+    .work-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+    }
+
+    .work-image {
+      background: linear-gradient(135deg, #f2f3f7, #e8ebf9);
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #aaa;
+      font-size: 0.95rem;
+    }
+
+    .work-content {
+      padding: 18px 22px;
+    }
+
+    .work-content h3 {
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+      color: #2b2b2b;
+    }
+
+    .work-content p {
+      font-size: 1rem;
+      color: #555;
+      margin-bottom: 10px;
+      line-height: 1.6;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 0.8rem;
+      color: #2b4eff;
+      background-color: #e8ecff;
+      padding: 4px 10px;
+      border-radius: 6px;
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 60px;
+      font-size: 0.9rem;
+      color: #999;
+    }
+
+    /* 新增按鈕與提示樣式 */
+    .action-button {
+      display: block;
+      margin: 30px auto 0;
+      padding: 12px 24px;
+      background: linear-gradient(90deg, #2b4eff, #738cff);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .action-button:hover {
+      background: linear-gradient(90deg, #506dff, #9eaaff);
+      transform: translateY(-2px);
+    }
+
+    #thankYouMessage {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 1.1rem;
+      color: #2b4eff;
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 30px;
+      }
+      .intro {
+        flex-direction: column;
+      }
+      .avatar img {
+        max-width: 250px;
+      }
+      .intro-text h1 {
+        font-size: 2.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- 自我介紹 -->
+    <section class="intro">
+      <div class="intro-text">
+        <h1>蘇小蒨</h1>
+        <p>聯絡方式：<span class="highlight">0966-666-666</span></p>
+        <p>我是一位具有銀行與人資雙重背景的專業人士，曾任職於 <span class="highlight">台新銀行</span>、<span class="highlight">中國信託銀行</span> 擔任行員，並於 <span class="highlight">群益金融</span> 擔任人力資源職務。</p>
+        <p>我熱愛金融與人力資源的結合，持續探索如何將人力發展與企業策略緊密連結，創造具成長力與影響力的組織。</p>
+      </div>
+
+      <div class="avatar">
+        <img id="avatarPreview" src="https://via.placeholder.com/350x400?text=上傳大頭照" alt="個人頭像預覽">
+        <br>
+        <label for="avatarInput">上傳大頭照</label>
+        <input type="file" id="avatarInput" accept="image/*">
+      </div>
+    </section>
+
+    <!-- 作品展示 -->
+    <section class="works">
+      <h2>My Work</h2>
+      <div class="work-grid">
+        <div class="work-card">
+          <div class="work-image">圖片上傳區（預留）</div>
+          <div class="work-content">
+            <h3>作品名稱（預留）</h3>
+            <p>可填寫專案說明或內容摘要。</p>
+            <span class="tag">作品</span>
+          </div>
+        </div>
+
+        <div class="work-card">
+          <div class="work-image">圖片上傳區（預留）</div>
+          <div class="work-content">
+            <h3>專案名稱（預留）</h3>
+            <p>可放入銀行或人資相關的研究、簡報、或成果展示。</p>
+            <span class="tag">專案</span>
+          </div>
+        </div>
+
+        <div class="work-card">
+          <div class="work-image">圖片上傳區（預留）</div>
+          <div class="work-content">
+            <h3>證照與學習紀錄（預留）</h3>
+            <p>展示你的學習歷程、證照或自我成長計畫。</p>
+            <span class="tag">學習</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 新增按鈕 -->
+    <button class="action-button" onclick="showThankYou()">感謝瀏覽</button>
+    <div id="thankYouMessage"></div>
+
+    <div class="footer">
+      &copy; 2025 蘇小蒨 ｜ 個人介紹網站
+    </div>
+  </div>
+
+  <script>
+    // 頭像上傳預覽功能
+    const avatarInput = document.getElementById('avatarInput');
+    const avatarPreview = document.getElementById('avatarPreview');
+
+    avatarInput.addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          avatarPreview.src = e.target.result;
+        }
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // 顯示感謝訊息
+    function showThankYou() {
+      const thankYouMessage = document.getElementById('thankYouMessage');
+      thankYouMessage.textContent = '謝謝瀏覽我的名片！';
+      thankYouMessage.style.display = 'block';
+    }
+  </script>
+</body>
+</html>
