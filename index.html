@@ -24,6 +24,26 @@
       backdrop-filter: blur(10px);
     }
 
+    /* 動畫相關 */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in {
+      animation: fadeIn 0.8s ease-out forwards;
+    }
+
     /* 上方自我介紹區 */
     .intro {
       display: flex;
@@ -32,6 +52,11 @@
       justify-content: space-between;
       gap: 40px;
       margin-bottom: 60px;
+      opacity: 0;
+    }
+
+    .intro.fade-in {
+      opacity: 1;
     }
 
     .intro-text {
@@ -71,6 +96,7 @@
       border-radius: 12px;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: bounce 2s infinite ease-in-out;
     }
 
     .avatar img:hover {
@@ -102,6 +128,11 @@
     /* My Work 區塊 */
     .works {
       margin-top: 60px;
+      opacity: 0;
+    }
+
+    .works.fade-in {
+      opacity: 1;
     }
 
     .works h2 {
@@ -125,6 +156,11 @@
       overflow: hidden;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
       transition: all 0.3s ease;
+      opacity: 0;
+    }
+
+    .work-card.fade-in {
+      opacity: 1;
     }
 
     .work-card:hover {
@@ -133,6 +169,7 @@
     }
 
     .work-image {
+      position: relative;
       background: linear-gradient(135deg, #f2f3f7, #e8ebf9);
       height: 180px;
       display: flex;
@@ -140,6 +177,40 @@
       justify-content: center;
       color: #aaa;
       font-size: 0.95rem;
+      overflow: hidden;
+    }
+
+    .work-image img, .work-image video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .upload-overlay {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      opacity: 0.5; /* 初始半透明，優化隱藏 */
+      transition: opacity 0.3s ease;
+    }
+
+    .work-image:hover .upload-overlay {
+      opacity: 1; /* hover時完全顯示 */
+    }
+
+    .upload-btn {
+      padding: 2px 4px; /* 更小尺寸 */
+      background: transparent; /* 透明背景 */
+      color: #ccc; /* 低調顏色，與底圖融合 */
+      border-radius: 2px;
+      cursor: pointer;
+      font-size: 0.6rem; /* 更小字體 */
+      border: none; /* 無邊框 */
+      transition: color 0.3s;
+    }
+
+    .upload-btn:hover {
+      color: #888; /* hover時稍深顏色 */
     }
 
     .work-content {
@@ -202,6 +273,7 @@
       font-size: 1.1rem;
       color: #2b4eff;
       display: none;
+      animation: slideIn 0.5s ease-out;
     }
 
     @media (max-width: 768px) {
@@ -244,7 +316,12 @@
       <h2>My Work</h2>
       <div class="work-grid">
         <div class="work-card">
-          <div class="work-image">圖片上傳區（預留）</div>
+          <div class="work-image" id="workImage1">圖片/影片上傳區（預留）
+            <div class="upload-overlay">
+              <label for="uploadInput1" class="upload-btn">上傳</label>
+            </div>
+          </div>
+          <input type="file" id="uploadInput1" accept="image/*,video/*">
           <div class="work-content">
             <h3>作品名稱（預留）</h3>
             <p>可填寫專案說明或內容摘要。</p>
@@ -253,7 +330,12 @@
         </div>
 
         <div class="work-card">
-          <div class="work-image">圖片上傳區（預留）</div>
+          <div class="work-image" id="workImage2">圖片/影片上傳區（預留）
+            <div class="upload-overlay">
+              <label for="uploadInput2" class="upload-btn">上傳</label>
+            </div>
+          </div>
+          <input type="file" id="uploadInput2" accept="image/*,video/*">
           <div class="work-content">
             <h3>專案名稱（預留）</h3>
             <p>可放入銀行或人資相關的研究、簡報、或成果展示。</p>
@@ -262,7 +344,12 @@
         </div>
 
         <div class="work-card">
-          <div class="work-image">圖片上傳區（預留）</div>
+          <div class="work-image" id="workImage3">圖片/影片上傳區（預留）
+            <div class="upload-overlay">
+              <label for="uploadInput3" class="upload-btn">上傳</label>
+            </div>
+          </div>
+          <input type="file" id="uploadInput3" accept="image/*,video/*">
           <div class="work-content">
             <h3>證照與學習紀錄（預留）</h3>
             <p>展示你的學習歷程、證照或自我成長計畫。</p>
@@ -303,6 +390,61 @@
       thankYouMessage.textContent = '謝謝瀏覽我的名片！';
       thankYouMessage.style.display = 'block';
     }
+
+    // 動畫初始化
+    document.addEventListener('DOMContentLoaded', () => {
+      const intro = document.querySelector('.intro');
+      const works = document.querySelector('.works');
+      const workCards = document.querySelectorAll('.work-card');
+
+      // 延遲載入動畫
+      setTimeout(() => {
+        intro.classList.add('fade-in');
+      }, 200);
+
+      setTimeout(() => {
+        works.classList.add('fade-in');
+        workCards.forEach((card, index) => {
+          setTimeout(() => {
+            card.classList.add('fade-in');
+          }, index * 200);
+        });
+      }, 600);
+
+      // 工作區塊上傳預覽功能
+      [1, 2, 3].forEach((index) => {
+        const uploadInput = document.getElementById(`uploadInput${index}`);
+        const workImage = document.getElementById(`workImage${index}`);
+
+        uploadInput.addEventListener('change', function(event) {
+          const file = event.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+              workImage.innerHTML = ''; // 清空內容
+              if (file.type.startsWith('image/')) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                workImage.appendChild(img);
+              } else if (file.type.startsWith('video/')) {
+                const video = document.createElement('video');
+                video.src = e.target.result;
+                video.controls = true;
+                video.autoplay = false;
+                video.loop = false;
+                workImage.appendChild(video);
+              }
+              // 保留上傳覆蓋層
+              const overlay = document.createElement('div');
+              overlay.className = 'upload-overlay';
+              overlay.innerHTML = `<label for="uploadInput${index}" class="upload-btn">上傳</label>`;
+              workImage.appendChild(overlay);
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+      });
+    });
   </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'992f3d4edaeff1dc',t:'MTc2MTIwMTU4OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
